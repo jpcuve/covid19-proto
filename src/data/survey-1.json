@@ -1,0 +1,730 @@
+{
+  "surveyId": 1,
+  "startId": "houseCountry",
+  "questions": {
+    "houseCountry": {
+      "textId": "question_house_country",
+      "group": "home",
+      "groupStart": true,
+      "prefill": "next",
+      "display": {
+        "type": "dropdown",
+        "options": [
+          { "value": "at", "textId": "answer_country_at" },
+          { "value": "be", "textId": "answer_country_be" },
+          { "value": "cz", "textId": "answer_country_cz" },
+          { "value": "dk", "textId": "answer_country_dk" },
+          { "value": "ee", "textId": "answer_country_ee" },
+          { "value": "fi", "textId": "answer_country_fi" },
+          { "value": "fr", "textId": "answer_country_fr" },
+          { "value": "de", "textId": "answer_country_de" },
+          { "value": "gr", "textId": "answer_country_gr" },
+          { "value": "hu", "textId": "answer_country_hu" },
+          { "value": "is", "textId": "answer_country_is" },
+          { "value": "it", "textId": "answer_country_it" },
+          { "value": "lv", "textId": "answer_country_lv" },
+          { "value": "li", "textId": "answer_country_li" },
+          { "value": "lt", "textId": "answer_country_lt" },
+          { "value": "lu", "textId": "answer_country_lu" },
+          { "value": "mt", "textId": "answer_country_mt" },
+          { "value": "nl", "textId": "answer_country_nl" },
+          { "value": "no", "textId": "answer_country_no" },
+          { "value": "pl", "textId": "answer_country_pl" },
+          { "value": "pt", "textId": "answer_country_pt" },
+          { "value": "sk", "textId": "answer_country_sk" },
+          { "value": "si", "textId": "answer_country_si" },
+          { "value": "es", "textId": "answer_country_es" },
+          { "value": "se", "textId": "answer_country_se" },
+          { "value": "ch", "textId": "answer_country_ch" }
+        ]
+      },
+      "validation": {
+        "default": {
+          "schema" : {
+            "type": "string",
+            "enum": [
+              "at",
+              "be",
+              "ch",
+              "cz",
+              "de",
+              "dk",
+              "ee",
+              "es",
+              "fi",
+              "fr",
+              "gr",
+              "hu",
+              "is",
+              "it",
+              "li",
+              "lt",
+              "lu",
+              "lv",
+              "mt",
+              "nl",
+              "no",
+              "pl",
+              "pt",
+              "se",
+              "si",
+              "sk"
+            ]
+          }
+        }
+      },
+      "next": { "default": "housePostal" }
+    },
+    "housePostal": {
+      "textId": "question_house_postal",
+      "group": "home",
+      "prefill": "next",
+      "display": { "type": "input", "inputType": "text" },
+      "validation": {
+        "default": {
+          "schema" : { "type": "string" }
+        },
+        "conditional": [
+          {
+            "schema" : { "pattern": "^\\d{4}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "at" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^[1-9][0-9]{3}$"},
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "be" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^\\d{4}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "ch" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^\\d{3}\\s\\d{2}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "cz" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^\\d{5}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "de" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^\\d{4}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "dk" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^\\d{5}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "ee" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^\\d{5}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "es" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^\\d{5}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "fi" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^\\d{5}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "fi" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^\\d{5}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "fr" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^\\d{3}\\s?\\d{2}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "gr" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^\\d{4}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "hu" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^\\d{3}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "is" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^\\d{5}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "it" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^\\d{4}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "li" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^[Ll][Tt][- ]?\\d{5}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "lt" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^\\d{4}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "lu" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^[Ll][Vv][- ]?\\d{4}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "lv" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^[A-Za-z]{3}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "mt" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^\\d{4}\\s?[A-Za-z]{2}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "nl" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^\\d{4}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "no" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^\\d{2}[- ]?\\d{3}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "pl" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^\\d{4}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "pt" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^\\d{4}[- ]?\\d{3}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "pt" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^\\d{3}\\s?\\d{2}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "se" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^([Ss][Ii][- ]?)?\\d{4}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "si" }
+              }
+            ]
+          },
+          {
+            "schema" : { "pattern": "^\\d{3}\\s?\\d{2}$" },
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseCountry",
+                "schema": { "const": "sk" }
+              }
+            ]
+          }
+        ]
+      },
+      "next": { "default": "houseInhabitants" }
+    },
+    "houseInhabitants": {
+      "textId": "question_house_inhabitants",
+      "bottomNoteId": "question_house_inhabitants_bottom_note",
+      "group": "home",
+      "prefill": "next",
+      "display": {
+        "type": "slider",
+        "min": 1,
+        "max": 10,
+        "step": 1
+      },
+      "validation": {
+        "default": {
+          "schema" : {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          }
+        }
+      },
+      "next": {
+        "default": "houseSickPersons",
+        "conditional": [
+          {
+            "questionId": "personName",
+            "conditions": [
+              {
+                "pack": "some",
+                "questionId": "personName",
+                "prefilled": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "houseSickPersons": {
+      "textId": "question_house_sick_persons",
+      "bottomNoteId": "question_house_sick_persons_bottom_note",
+      "group": "home",
+      "display": { "type": "yesNo" },
+      "validation": {
+        "default": {
+          "schema" : { "type": "boolean" }
+        }
+      },
+      "next": {
+        "default": null,
+        "conditional": [
+          {
+            "questionId": "personName",
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseSickPersons",
+                "schema": { "const": true }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "personName": {
+      "textId": "question_person_name",
+      "topNoteId": "question_person_name_top_note",
+      "group": "person",
+      "groupStart": true,
+      "prefill": "next",
+      "display": { "type": "input", "inputType": "text" },
+      "validation": {
+        "default": {
+          "schema" : { "type": "string" }
+        }
+      },
+      "unique": true,
+      "next": { "default": "personAgeRange" }
+    },
+    "personAgeRange": {
+      "textId": "question_person_age",
+      "textData": {
+        "name": { "questionId": "personName" }
+      },
+      "group": "person",
+      "prefill": "next",
+      "display": {
+        "type": "select",
+        "options": [
+          { "value": "0-19", "textId": "answer_age_0-19" },
+          { "value": "20-39", "textId": "answer_age_20-39" },
+          { "value": "40-59", "textId": "answer_age_40-59" },
+          { "value": "60-79", "textId": "answer_age_60-79" },
+          { "value": "80+", "textId": "answer_age_80+" }
+        ]
+      },
+      "validation": {
+        "default": {
+          "schema" : {
+            "type": "string",
+            "enum": [ "0-19", "20-39", "40-59", "60-79", "80+" ]
+          }
+        }
+      },
+      "next": { "default": "personGender" }
+    },
+    "personGender": {
+      "textId": "question_person_gender",
+      "textData": {
+        "name": { "questionId": "personName" }
+      },
+      "group": "person",
+      "prefill": "next",
+      "display": {
+        "type": "select",
+        "options": [
+          { "value": "m", "textId": "answer_gender_m" },
+          { "value": "f", "textId": "answer_gender_f" }
+        ]
+      },
+      "validation": {
+        "default": {
+          "schema" : {
+            "type": "string",
+            "enum": [ "m", "f" ]
+          }
+        }
+      },
+      "next": { "default": "personPreconditions" }
+    },
+    "personPreconditions": {
+      "textId": "question_person_preconditions",
+      "textData": {
+        "name": { "questionId": "personName" }
+      },
+      "group": "person",
+      "prefill": "next",
+      "display": { "type": "yesNo" },
+      "validation": {
+        "default": {
+          "schema" : { "type": "boolean" }
+        }
+      },
+      "next": {
+        "default": "personSymptoms",
+        "conditional": [
+          {
+            "questionId": "personStillHasSymptoms",
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "personName",
+                "prefilled": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "personStillHasSymptoms": {
+      "textId": "question_person_still_has_symptoms",
+      "textData": {
+        "name": { "questionId": "personName" }
+      },
+      "bottomNoteId": "question_person_still_has_symptoms_bottom_note",
+      "group": "person",
+      "display": { "type": "yesNo" },
+      "validation": {
+        "default": {
+          "schema" : { "type": "boolean" }
+        }
+      },
+      "next": {
+        "default": "personSymptoms",
+        "conditional": [
+          {
+            "questionId": "personName",
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "personStillHasSymptoms",
+                "schema": { "const": false }
+              },
+              {
+                "pack": "next",
+                "questionId": "personName",
+                "prefilled": true
+              }
+            ]
+          }, {
+            "questionId": "houseOthers",
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "personStillHasSymptoms",
+                "schema": { "const": false }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "personSymptoms": {
+      "textId": "question_person_symptoms",
+      "textData": {
+        "name": { "questionId": "personName" }
+      },
+      "group": "person",
+      "prefill": "show",
+      "display": {
+        "type": "multiSelect",
+        "options": [
+          { "value": "cough", "textId": "answer_cough" },
+          { "value": "fever", "textId": "answer_fever" },
+          { "value": "breathShortness", "textId": "answer_breath_shortness" },
+          { "value": "debilitatingFatigue", "textId": "answer_debilitating_fatigue" },
+          { "value": "muscleAche", "textId": "answer_muscle_ache" },
+          { "value": "skippedMeals", "textId": "answer_skipped_meals" },
+          { "value": "smellLoss", "textId": "answer_smell_loss" },
+          { "value": "runnyNoseSneezing", "textId": "answer_runny_nose_sneezing" },
+          { "value": "nauseaDiarrhea", "textId": "answer_nosea_diarrhea" },
+          { "value": "soreThroat", "textId": "answer_sore_throat" },
+          { "value": "headache", "textId": "answer_headache" },
+          { "value": "other", "textId": "answer_other" }
+        ]
+      },
+      "validation": {
+        "default": {
+          "schema" : {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "cough",
+                "fever",
+                "breathShortness",
+                "runnyNoseSneezing",
+                "nauseaDiarrhea",
+                "soreThroat",
+                "headache",
+                "muscleAche",
+                "smellLoss",
+                "other"
+              ]
+            }
+          }
+        }
+      },
+      "next": { "default": "personSevereSymptoms" }
+    },
+    "personSevereSymptoms": {
+      "textId": "question_person_severe_symptoms",
+      "textData": {
+        "name": { "questionId": "personName" }
+      },
+      "bottomNoteId": "question_person_severe_symptoms_bottom_note",
+      "group": "person",
+      "prefill": "show",
+      "display": { "type": "yesNo" },
+      "validation": {
+        "default": {
+          "schema" : { "type": "boolean" }
+        }
+      },
+      "next": { "default": "personTested" }
+    },
+    "personTested": {
+      "textId": "question_person_tested",
+      "textData": {
+        "name": { "questionId": "personName" }
+      },
+      "group": "person",
+      "prefill": "show",
+      "display": {
+        "type": "select",
+        "options": [
+          { "value": "testedPositive", "textId": "answer_tested_positive"},
+          { "value": "testedNegative", "textId": "answer_tested_negative"},
+          { "value": "notTested", "textId": "answer_not_tested"}
+        ]
+      },
+      "validation": {
+        "default": {
+          "schema" : {
+            "type": "string",
+            "enum": [ "testedPositive", "testedNegative", "notTested" ]
+          }
+        }
+      },
+      "next": { "default": "personSymptomsEvolution" }
+    },
+    "personSymptomsEvolution": {
+      "textId": "question_person_symptoms_evolution",
+      "textData": {
+        "name": { "questionId": "personName" }
+      },
+      "group": "person",
+      "display": {
+        "type": "select",
+        "options": [
+          { "value": "better", "textId": "answer_symptoms_evolution_better"},
+          { "value": "same", "textId": "answer_symptoms_evolution_same"},
+          { "value": "worse", "textId": "answer_symptoms_evolution_worse"}
+        ]
+      },
+      "validation": {
+        "default": {
+          "schema" : {
+            "type": "string",
+            "enum": [ "better", "same", "worse" ]
+          }
+        }
+      },
+      "next": {
+        "default": "houseOthers",
+        "conditional": [
+          {
+            "questionId": "personName",
+            "conditions": [
+              {
+                "pack": "next",
+                "questionId": "personName",
+                "prefilled": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "houseOthers": {
+      "textId": "question_house_others",
+      "bottomNoteId": "question_house_others_bottom_note",
+      "group": "other",
+      "groupStart": true,
+      "skipAt": {
+        "questionId": "houseInhabitants"
+      },
+      "display": { "type": "yesNo" },
+      "validation": {
+        "default": {
+          "schema" : { "type": "boolean" }
+        }
+      },
+      "next": {
+        "default": null,
+        "conditional": [
+          {
+            "questionId": "personName",
+            "conditions": [
+              {
+                "pack": "current",
+                "questionId": "houseOthers",
+                "schema": { "const": true }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
