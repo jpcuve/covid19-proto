@@ -4,6 +4,7 @@ import { ApplicationState } from '../store'
 import { useSelector } from 'react-redux'
 
 const PageTemplate: React.FC<RouteComponentProps> = props => {
+  const {children} = props
   const fetching = useSelector<ApplicationState, boolean>(state => state.fetching)
   const errors = useSelector<ApplicationState, string[]>(state => state.errors)
   return (
@@ -13,7 +14,7 @@ const PageTemplate: React.FC<RouteComponentProps> = props => {
         {errors.length > 0 && <span>{JSON.stringify(errors)}</span>}
       </div>
       <div>
-        {props.children}
+        {children}
       </div>
     </>
   )

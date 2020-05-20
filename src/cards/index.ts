@@ -1,10 +1,10 @@
-import { RouteComponentProps } from "react-router";
-
-export class CardData implements CardData {
+export class CardData {
   public type: string
+  public data: any
 
-  constructor(type: string){
+  constructor(type: string, data: any = {}){
     this.type = type
+    this.data = data
   }
 }
 

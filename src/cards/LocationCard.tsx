@@ -4,7 +4,8 @@ import { CardProps } from '.'
 
 const LocationCard: React.FC<CardProps> = props => {
   const [data, setData] = React.useState<any>({country: '', cityCode: ''})
-  React.useEffect(() => props.onData(data), [data])
+  const {onData}  = props
+  React.useEffect(() => onData(data), [data, onData])
   return (
     <CardTemplate {...props}>
       <form>
