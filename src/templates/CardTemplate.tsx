@@ -1,16 +1,22 @@
 import React from 'react'
-import { RouteComponentProps } from 'react-router'
-import PageTemplate from './PageTemplate'
+import { CardProps } from '../cards'
 
-const CardTemplate: React.FC<RouteComponentProps> = props => {
+const CardTemplate: React.FC<CardProps> = props => {
   return (
-    <PageTemplate {...props}>
-      <button>Previous</button>
-      <button>Next</button>
+    <div>
+      <div>
+        <span>Card:</span>
+        <button onClick={() => props.onMove(-1)}>Previous</button>
+        <button onClick={() => props.onMove(+1)}>Next</button>
+      </div>
       <div>
         {props.children}
       </div>
-    </PageTemplate>
+      <div>
+        <span>Card:</span>
+        <button onClick={() => props.onMove(+1)}>OK</button>
+      </div>
+    </div>
   )
 }
 

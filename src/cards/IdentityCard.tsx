@@ -1,8 +1,8 @@
 import React from 'react'
-import { RouteComponentProps } from 'react-router'
+import { CardProps } from '.'
 import CardTemplate from '../templates/CardTemplate'
 
-const IdentityCard: React.FC<RouteComponentProps> = props => {
+const IdentityCard: React.FC<CardProps> = props => {
   return (
     <CardTemplate {...props}>
       <div>Enter intials</div>
