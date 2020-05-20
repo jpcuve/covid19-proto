@@ -41,9 +41,9 @@ export class Survey {
     this.nextCard = getDefaultCard(nextType)
   }
 
-  getData = () => { return {
+  getData = () => ({
     household: this.household,
     people: this.people,
-  }}
+  })
 
 }
