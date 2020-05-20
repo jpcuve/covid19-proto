@@ -1,59 +1,43 @@
 import React from 'react'
 import PageTemplate from '../templates/PageTemplate'
 import { RouteComponentProps } from 'react-router'
-import { CardData } from '../cards'
-import LocationCard from '../cards/LocationCard'
-import HouseholdCard from '../cards/HouseholdCard'
-import SickCard from '../cards/SickCard'
-import FinalCard from '../cards/FinalCard'
+import { Card } from '../cards'
+import { Survey } from '../survey'
+import CardSelector from '../cards/CardSelector'
 
 const SurveyView: React.FC<RouteComponentProps> = props => {
-  const defaultCard = new CardData('location')
-  const [cards, setCards] = React.useState<CardData[]>([defaultCard])
-  const lastCard = cards[cards.length - 1]
+  const [cards, setCards] = React.useState<Card[]>([])
+  const [survey, setSurvey] = React.useState<Survey>(new Survey(cards))
+  const [currentCard, setCurrentCard] = React.useState<Card>(survey.nextCard)
   const handleMove = (displacement: number) => {
     if (displacement > 0){
-      let nextType: string = 'final'
-      switch(lastCard.type){
-        case 'location':
-          nextType = 'household'
-          break;  
-        case 'household':
-          nextType = 'sick'
-          break;
-      }
-      setCards([...cards, new CardData(nextType)])
+      const deck = [...cards, currentCard]
+      setCards(deck)
+      const survey = new Survey(deck)
+      setSurvey(survey)
+      setCurrentCard(survey.nextCard)
     }
     if (displacement < 0){
-      const newCards = [...cards]
-      for (let i = 0; i < -displacement; i++){
-        if (cards.length > 1){
-          newCards.pop()
-        }
+      const l = cards.length
+      if (l > 0){
+        setCards(cards.slice(0, l - 1))
+        setCurrentCard({...cards[l - 1]})  
       }
-      setCards(newCards)
     }
   }
-  const handleData = (data: any) => {
-    lastCard.data = data
-  }
-  const selectCard = (type: string) => {
-    switch(type){
-      case 'location': return <LocationCard {...props} onMove={handleMove} onData={handleData}/>
-      case 'household': return <HouseholdCard {...props} onMove={handleMove} onData={handleData}/>
-      case 'sick': return <SickCard {...props} onMove={handleMove} onData={handleData}/>
-      case 'final': return <FinalCard {...props} onMove={handleMove} onData={handleData}/>
-    }
+  const handleAnswer = (answer: any) => {
+    console.log(`Receiving answer: ${JSON.stringify(answer)}`)
+    setCurrentCard({...currentCard, answer})
   }
   return (
     <PageTemplate {...props}>
       <div>Survey</div>
-      <button onClick={() => props.history.push('/survey/location')}>Start survey</button>
-      {selectCard(lastCard.type)}
+      <CardSelector card={currentCard} survey={survey} handleAnswer={handleAnswer} handleMove={handleMove} />
+      <div>Current: {currentCard.type} {JSON.stringify(currentCard.answer)}</div>
       <ul>
-        {cards.map(card => {
+        {[...cards].reverse().map((c, index) => {
           return (
-          <li>{card.type}: {JSON.stringify(card.data)}</li>
+          <li key={index.toString()}>{c.type}: {JSON.stringify(c.answer)}</li>
           )
         })}
       </ul>

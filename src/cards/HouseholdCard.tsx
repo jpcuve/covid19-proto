@@ -3,17 +3,33 @@ import { CardProps } from '.'
 import CardTemplate from '../templates/CardTemplate'
 
 const HouseholdCard: React.FC<CardProps> = props => {
-  const [data, setData] = React.useState<any>({'householdSize': 1})
-  const {onData}  = props
-  React.useEffect(() => onData(data), [data, onData])
+  const {answer: data, onAnswer: onData}  = props
   return (
     <CardTemplate {...props}>
       <form>
         <fieldset>
-          <legend>How many people in your household?</legend>
+          <legend>Household</legend>
+          <label>
+            <span>Country</span>
+            <br/>
+            <select value={data.country} onChange={e => onData({...data, country: e.currentTarget.value})}>
+              <option value=''></option>
+              <option value='europe'>Europe</option>
+              <option value='america'>America</option>
+              <option value='africa'>Africa</option>
+              <option value='asia'>Asia</option>
+              <option value='oceania'>Oceania</option>
+            </select>
+          </label>
+          <label>
+            <span>City code</span>
+            <br/>
+            <input value={data.cityCode} onChange={e => onData({...data, cityCode: e.currentTarget.value})}/>
+          </label>
           <label>
             <span>Number of people</span>
-            <select value={data.householdSize} onChange={e => setData({...setData, householdSize: +e.currentTarget.value})}>
+            <br/>
+            <select value={data.householdSize} onChange={e => onData({...data, householdSize: +e.currentTarget.value})}>
               <option value='1'>1</option>
               <option value='2'>2</option>
               <option value='3'>3</option>

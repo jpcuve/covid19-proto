@@ -1,11 +1,18 @@
 import React from 'react'
 import { CardProps } from '.'
 import CardTemplate from '../templates/CardTemplate'
+import { Survey } from '../survey'
 
-const FinalCard: React.FC<CardProps> = props => {
+interface FinalCardProps extends CardProps {
+  survey: Survey
+}
+
+
+const FinalCard: React.FC<FinalCardProps> = props => {
+  const {survey} = props
   return (
     <CardTemplate {...props}>
-      <div>Summary</div>
+      <div><pre>{JSON.stringify(survey.getData(), null, 2)}</pre></div>
       <div>Captcha</div>
     </CardTemplate>
   )
