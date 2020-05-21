@@ -2,26 +2,26 @@ import React from 'react'
 import { CardProps } from '.'
 import CardTemplate from '../templates/CardTemplate'
 
-const OtherSymptomaticCard: React.FC<CardProps> = props => {
-  const {answer: data, onAnswer: onData}  = props
+const QuestionSymptomCard: React.FC<CardProps> = props => {
+  const {answer, onAnswer}  = props
   const [errors, setErrors] = React.useState<string[]>(['Please fill the form'])
   const validate = (data: any) => {
     setErrors([])
-    onData(data)
+    onAnswer(data)
   }
 
   return (
     <CardTemplate {...props} errors={errors}>
       <form>
         <fieldset>
-          <legend>Is there another symptomatic person?</legend>
+          <legend>Is anybody symptomatic?</legend>
           <label>
             <span>Yes</span>
-            <input type='radio' checked={data.otherSymptomatic === true} onChange={() => validate({...data, otherSymptomatic: true})}/>
+            <input type='radio' checked={answer.response === true} onChange={() => validate({...answer, response: true})}/>
           </label>
           <label>
             <span>No</span>
-            <input type='radio' checked={data.otherSymptomatic === false} onChange={() => validate({...data, otherSymptomatic: false})}/>
+            <input type='radio' checked={answer.response === false} onChange={() => validate({...answer, response: false})}/>
           </label>
         </fieldset>
       </form>
@@ -29,4 +29,4 @@ const OtherSymptomaticCard: React.FC<CardProps> = props => {
   )
 }
 
-export default OtherSymptomaticCard
+export default QuestionSymptomCard

@@ -3,7 +3,7 @@ import { CardProps } from '.'
 import CardTemplate from '../templates/CardTemplate'
 
 const HouseholdCard: React.FC<CardProps> = props => {
-  const {answer: data, onAnswer: onData}  = props
+  const {answer, onAnswer}  = props
   const [errors, setErrors] = React.useState<string[]>(['Please fill the form'])
   const validate = (data: any) => {
     const messages = []
@@ -14,7 +14,7 @@ const HouseholdCard: React.FC<CardProps> = props => {
       messages.push('Please fill-in a city code')
     }
     setErrors(messages)
-    onData(data)
+    onAnswer(data)
   }
   
   return (
@@ -25,7 +25,7 @@ const HouseholdCard: React.FC<CardProps> = props => {
           <label>
             <span>Country</span>
             <br/>
-            <select value={data.country} onChange={e => validate({...data, country: e.currentTarget.value})}>
+            <select value={answer.country} onChange={e => validate({...answer, country: e.currentTarget.value})}>
               <option value=''></option>
               <option value='europe'>Europe</option>
               <option value='america'>America</option>
@@ -37,12 +37,12 @@ const HouseholdCard: React.FC<CardProps> = props => {
           <label>
             <span>City code</span>
             <br/>
-            <input value={data.cityCode} onChange={e => validate({...data, cityCode: e.currentTarget.value})}/>
+            <input value={answer.cityCode} onChange={e => validate({...answer, cityCode: e.currentTarget.value})}/>
           </label>
           <label>
             <span>Number of people</span>
             <br/>
-            <select value={data.householdSize} onChange={e => validate({...data, householdSize: +e.currentTarget.value})}>
+            <select value={answer.householdSize} onChange={e => validate({...answer, householdSize: +e.currentTarget.value})}>
               <option value='1'>1</option>
               <option value='2'>2</option>
               <option value='3'>3</option>

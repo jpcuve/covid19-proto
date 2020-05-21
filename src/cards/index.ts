@@ -1,10 +1,11 @@
 export enum CardType {
   Blank = 'blank',
   Household = 'household',
-  Sick = 'sick',
+  QuestionSymptom = 'questionSymptom',
   Identity = 'identity',
   Symptom = 'symptom',
-  OtherSymptomatic = 'otherSymptomatic',
+  QuestionOther = 'questionOther',
+  QuestionStill = 'questionStill',
   Final = 'final',
 }
 
@@ -26,14 +27,15 @@ export interface CardProps {
   onMove: (displacement: number) => void
 }
 
-export const getDefaultCard: (type: CardType) => Card = type => {
+export function getDefaultCard(type: CardType, extra: any = {}) {
   switch(type){
-    case CardType.Blank: return new Card(type, {})
-    case CardType.Household: return new Card(type, {country: '', cityCode: '', householdSize: 1})
-    case CardType.Sick: return new Card(type, {sick: null})
-    case CardType.Identity: return new Card(type, {initials: '', ageRange: ''})
-    case CardType.Symptom: return new Card(type, {test: ''})
-    case CardType.OtherSymptomatic: return new Card(type, {otherSymptomatic: null})
-    case CardType.Final: return new Card(type, {})
+    case CardType.Blank: return new Card(type, extra)
+    case CardType.Household: return new Card(type, {...extra, country: '', cityCode: '', householdSize: 1})
+    case CardType.QuestionSymptom: return new Card(type, {...extra, response: null})
+    case CardType.Identity: return new Card(type, {...extra, initials: '', ageRange: ''})
+    case CardType.Symptom: return new Card(type, {...extra, test: ''})
+    case CardType.QuestionOther: return new Card(type, {...extra, response: null})
+    case CardType.QuestionStill: return new Card(type, {...extra, response: null})
+    case CardType.Final: return new Card(type, {...extra})
   }
 }

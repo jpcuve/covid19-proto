@@ -1,6 +1,45 @@
 [
   {
     "name": "No survey",
-    "data":{}
+    "answer":{}
+  },
+  {
+    "name": "Uccle",
+    "answer":{
+      "household": {
+        "country": "europe",
+        "cityCode": "1180",
+        "householdSize": 5
+      },
+      "people": [
+        {
+          "identity": {
+            "initials": "jpc",
+            "ageRange": "50<=60"
+          },
+          "symptom": {
+            "test": "yes-"
+          }
+        },
+        {
+          "identity": {
+            "initials": "am",
+            "ageRange": "<50"
+          },
+          "symptom": {
+            "test": "no"
+          }
+        },
+        {
+          "identity": {
+            "initials": "mc",
+            "ageRange": "<50"
+          },
+          "symptom": {
+            "test": "no"
+          }
+        }
+      ]
+    }
   }
 ]

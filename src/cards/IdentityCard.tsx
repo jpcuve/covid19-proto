@@ -3,7 +3,7 @@ import { CardProps } from '.'
 import CardTemplate from '../templates/CardTemplate'
 
 const IdentityCard: React.FC<CardProps> = props => {
-  const {answer: data, onAnswer: onData}  = props
+  const {answer, onAnswer}  = props
   const [errors, setErrors] = React.useState<string[]>(['Please fill the form'])
   const validate = (data: any) => {
     const messages = []
@@ -14,7 +14,7 @@ const IdentityCard: React.FC<CardProps> = props => {
       messages.push('Please choose an age range')
     }
     setErrors(messages)
-    onData(data)
+    onAnswer(data)
   }
 
   return (
@@ -25,12 +25,12 @@ const IdentityCard: React.FC<CardProps> = props => {
           <label>
             <span>Initials</span>
             <br/>
-            <input value={data.initials} onChange={e => validate({...data, initials: e.currentTarget.value})}/>
+            <input value={answer.initials} onChange={e => validate({...answer, initials: e.currentTarget.value})}/>
           </label>
           <label>
             <span>Age range</span>
             <br/>
-            <select value={data.ageRange} onChange={e => validate({...data, ageRange: e.currentTarget.value})}>
+            <select value={answer.ageRange} onChange={e => validate({...answer, ageRange: e.currentTarget.value})}>
               <option value=''></option>
               <option value='<50'>Under 50</option>
               <option value='50<=60'>Between 50 and 60</option>

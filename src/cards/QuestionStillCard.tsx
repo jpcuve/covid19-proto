@@ -2,26 +2,26 @@ import React from 'react'
 import { CardProps } from '.'
 import CardTemplate from '../templates/CardTemplate'
 
-const SickCard: React.FC<CardProps> = props => {
-  const {answer: data, onAnswer: onData}  = props
+const QuestionStillCard: React.FC<CardProps> = props => {
+  const {answer, onAnswer}  = props
   const [errors, setErrors] = React.useState<string[]>(['Please fill the form'])
   const validate = (data: any) => {
     setErrors([])
-    onData(data)
+    onAnswer(data)
   }
 
   return (
     <CardTemplate {...props} errors={errors}>
       <form>
         <fieldset>
-          <legend>Does somebody have symptoms?</legend>
+          <legend>Is {answer.identity.initials} still showing symptoms?</legend>
           <label>
             <span>Yes</span>
-            <input type='radio' checked={data.sick === true} onChange={() => validate({...data, sick: true})}/>
+            <input type='radio' checked={answer.response === true} onChange={() => validate({...answer, response: true})}/>
           </label>
           <label>
             <span>No</span>
-            <input type='radio' checked={data.sick === false} onChange={() => validate({...data, sick: false})}/>
+            <input type='radio' checked={answer.response === false} onChange={() => validate({...answer, response: false})}/>
           </label>
         </fieldset>
       </form>
@@ -29,4 +29,4 @@ const SickCard: React.FC<CardProps> = props => {
   )
 }
 
-export default SickCard
+export default QuestionStillCard
