@@ -1,21 +1,30 @@
 import React from 'react'
 import { CardProps } from '../cards'
 
-const CardTemplate: React.FC<CardProps> = props => {
-  const {onMove, children} = props
+interface CardTemplateProps extends CardProps {
+  errors: string[],
+}
+
+const CardTemplate: React.FC<CardTemplateProps> = props => {
+  const {onMove, children, errors} = props
   return (
     <div>
       <div>
         <span>Card:</span>
         <button onClick={() => onMove(-1)}>Previous</button>
-        <button onClick={() => onMove(+1)}>Next</button>
+        <button onClick={() => onMove(+1)} disabled={errors.length > 0}>Next</button>
+      </div>
+      <div>
+        <ul>
+          {errors.map(error => <li>{error}</li>)}
+        </ul>
       </div>
       <div>
         {children}
       </div>
       <div>
         <span>Card:</span>
-        <button onClick={() => onMove(+1)}>OK</button>
+        <button onClick={() => onMove(+1)} disabled={errors.length > 0}>OK</button>
       </div>
     </div>
   )

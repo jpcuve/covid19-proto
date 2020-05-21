@@ -4,7 +4,7 @@ import CardTemplate from '../templates/CardTemplate'
 
 const BlankCard: React.FC<CardProps> = props => {
   return (
-    <CardTemplate {...props}>
+    <CardTemplate {...props} errors={[]}>
       <div>Blank card with some information</div>
     </CardTemplate>
   )

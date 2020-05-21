@@ -11,7 +11,7 @@ interface FinalCardProps extends CardProps {
 const FinalCard: React.FC<FinalCardProps> = props => {
   const {survey} = props
   return (
-    <CardTemplate {...props}>
+    <CardTemplate {...props} errors={[]}>
       <div><pre>{JSON.stringify(survey.data, null, 2)}</pre></div>
       <div>Captcha</div>
     </CardTemplate>
