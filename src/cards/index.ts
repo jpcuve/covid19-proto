@@ -1,4 +1,5 @@
 export enum CardType {
+  Blank = 'blank',
   Household = 'household',
   Sick = 'sick',
   Identity = 'identity',
@@ -15,9 +16,9 @@ export class Card {
     this.type = type
     this.answer = answer
   }
-
-  toString = () => `${this.type}: ${JSON.stringify(this.answer)}`
 }
+
+export const defaultCard = new Card(CardType.Blank, {})
 
 export interface CardProps {
   answer: any,
@@ -27,6 +28,7 @@ export interface CardProps {
 
 export const getDefaultCard: (type: CardType) => Card = type => {
   switch(type){
+    case CardType.Blank: return new Card(type, {})
     case CardType.Household: return new Card(type, {country: '', cityCode: '', householdSize: 1})
     case CardType.Sick: return new Card(type, {sick: null})
     case CardType.Identity: return new Card(type, {initials: '', ageRange: ''})

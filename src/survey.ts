@@ -1,32 +1,49 @@
 import { Card, getDefaultCard, CardType } from "./cards";
 
 export class Survey {
-  nextCard: Card = getDefaultCard(CardType.Household)
-  state: number = 0
-  lastIdentity: any
-
-  household: any = {}
-  people: any[] = []
+  cards: Card[]
+  next: Card
+  data: any = {
+    people: []
+  }
 
   constructor(cards: Card[]){
-    console.log(`Constructing survey, card count: ${cards.length}`)
-    let nextType: CardType = this.nextCard.type
-    cards.forEach(card => {
+    this.cards = cards
+    this.next = this.pack()
+  }
+
+  push(card: Card) {
+    this.cards.push(card)
+    this.next = this.pack()
+  }
+
+  pop() {
+    const card = this.cards.pop()
+    if (card){
+      this.next = this.pack()
+    }
+  }
+
+  private pack(): Card {
+    console.log(`Packing survey, card count: ${this.cards.length}`)
+    let nextType: CardType = CardType.Household
+    let lastIdentity: any = {}
+    this.cards.forEach(card => {
       switch(card.type){
         case CardType.Household:
-          this.household = card.answer
+          this.data.household = card.answer
           nextType = CardType.Sick
           break
         case CardType.Sick:
           nextType = card.answer.sick ? CardType.Identity : CardType.Final
           break
         case CardType.Identity:
-          this.lastIdentity = card.answer
+          lastIdentity = card.answer
           nextType = CardType.Symptom
           break
         case CardType.Symptom:
-          this.people.push({
-            identity: this.lastIdentity,
+          this.data.people.push({
+            identity: lastIdentity,
             symptom: card.answer,
           })
           nextType = CardType.OtherSymptomatic
@@ -38,12 +55,6 @@ export class Survey {
           break  
       }
     })
-    this.nextCard = getDefaultCard(nextType)
+    return getDefaultCard(nextType)
   }
-
-  getData = () => ({
-    household: this.household,
-    people: this.people,
-  })
-
 }

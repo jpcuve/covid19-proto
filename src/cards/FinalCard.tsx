@@ -12,7 +12,7 @@ const FinalCard: React.FC<FinalCardProps> = props => {
   const {survey} = props
   return (
     <CardTemplate {...props}>
-      <div><pre>{JSON.stringify(survey.getData(), null, 2)}</pre></div>
+      <div><pre>{JSON.stringify(survey.data, null, 2)}</pre></div>
       <div>Captcha</div>
     </CardTemplate>
   )
