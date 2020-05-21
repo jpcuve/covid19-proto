@@ -1,34 +1,56 @@
-import { Card, getDefaultCard, CardType } from "./cards";
+import { Card, getDefaultCard, CardType } from "./cards"
 
-export class Survey {
-  cards: Card[]
-  next: Card
-  data: any = {
-    people: []
-  }
+
+abstract class Survey {
+  protected _cards: Card[]
+  protected _next: Card
+  readonly data: any = {}
 
   constructor(cards: Card[]){
-    this.cards = cards
-    this.next = this.pack()
+    this._cards = cards
+    this._next = this.pack()
   }
 
   push(card: Card) {
-    this.cards.push(card)
-    this.next = this.pack()
+    this._cards.push(card)
+    this._next = this.pack()
   }
 
   pop() {
-    const card = this.cards.pop()
+    const card = this._cards.pop()
     if (card){
-      this.next = this.pack()
+      this._next = this.pack()
     }
   }
 
-  private pack(): Card {
-    console.log(`Packing survey, card count: ${this.cards.length}`)
+  get cards(): Card[] {
+    return this._cards
+  }
+
+  get next(): Card {
+    return this._next
+  }
+  
+  protected abstract pack(): Card
+}
+
+export class SurveyOneContinue extends Survey {
+  constructor(cards: Card[], previousData: any){
+    super(cards)
+  }
+
+  protected pack(): Card {
+    let nextType: CardType = CardType.Blank
+    return getDefaultCard(nextType)
+  }
+}
+
+export class SurveyOneStart extends Survey {
+  protected pack(): Card {
+    console.log(`Packing survey, card count: ${this._cards.length}`)
     let nextType: CardType = CardType.Household
     let lastIdentity: any = {}
-    this.cards.forEach(card => {
+    this._cards.forEach(card => {
       switch(card.type){
         case CardType.Household:
           this.data.household = card.answer

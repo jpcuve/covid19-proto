@@ -10,17 +10,17 @@ import OtherSymptomaticCard from '../cards/OtherSymptomaticCard'
 import SickCard from '../cards/SickCard'
 import SymptomCard from '../cards/SymptomCard'
 import { ApplicationState } from '../store'
-import { Survey } from '../survey'
+import { SurveyOneStart, SurveyOneContinue } from '../survey'
 import PageTemplate from '../templates/PageTemplate'
 
 const SurveyView: React.FC<RouteComponentProps> = props => {
   const data = useSelector<ApplicationState, any>(state => state.survey)
   console.log(`Previous survey data: ${JSON.stringify(data)}`)
-  const survey = new Survey([])
+  const survey = new SurveyOneContinue([], {})
   const [cards, setCards] = React.useState<Card[]>(survey.cards)
   const [currentCard, setCurrentCard] = React.useState<Card>(survey.next)
   const handleMove = (displacement: number) => {
-    const survey = new Survey(cards)
+    const survey = new SurveyOneStart(cards)
     if (displacement > 0) {
       survey.push(currentCard)
     }
@@ -43,7 +43,7 @@ const SurveyView: React.FC<RouteComponentProps> = props => {
       {currentCard.type === CardType.Identity && <IdentityCard answer={currentCard.answer} onAnswer={handleAnswer} onMove={handleMove} />}
       {currentCard.type === CardType.Symptom && <SymptomCard answer={currentCard.answer} onAnswer={handleAnswer} onMove={handleMove} />}
       {currentCard.type === CardType.OtherSymptomatic && <OtherSymptomaticCard answer={currentCard.answer} onAnswer={handleAnswer} onMove={handleMove} />}
-      {currentCard.type === CardType.Final && <FinalCard answer={currentCard.answer} onAnswer={handleAnswer} onMove={handleMove} survey={new Survey(cards)} />}
+      {currentCard.type === CardType.Final && <FinalCard answer={currentCard.answer} onAnswer={handleAnswer} onMove={handleMove} survey={new SurveyOneStart(cards)} />}
       <div>Current: {currentCard.type} {JSON.stringify(currentCard.answer)}</div>
       <ul>
         {[...cards].reverse().map((c, index) => {

@@ -1,10 +1,10 @@
 import React from 'react'
 import { CardProps } from '.'
 import CardTemplate from '../templates/CardTemplate'
-import { Survey } from '../survey'
+import { SurveyOneStart } from '../survey'
 
 interface FinalCardProps extends CardProps {
-  survey: Survey
+  survey: SurveyOneStart
 }
 
 
