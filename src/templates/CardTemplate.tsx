@@ -16,7 +16,7 @@ const CardTemplate: React.FC<CardTemplateProps> = props => {
       </div>
       <div>
         <ul>
-          {errors.map(error => <li>{error}</li>)}
+          {errors.map((error, i) => <li key={i.toString()}>{error}</li>)}
         </ul>
       </div>
       <div>

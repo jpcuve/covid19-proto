@@ -5,6 +5,7 @@ import SurveyView from './views/SurveyView';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import survey from './data/survey-1.json'
+import HomeView from './views/HomeView';
 
 function App() {
   React.useEffect(() => {
@@ -14,7 +15,9 @@ function App() {
     <Provider store={store}>
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" component={SurveyView} />
+          <Route exact path='/' component={HomeView} />
+          <Route path='/home' component={HomeView}/>
+          <Route path='/survey' component={SurveyView}/>
           <Route render={() => (<div>No match</div>)} />
         </Switch>
       </BrowserRouter>
