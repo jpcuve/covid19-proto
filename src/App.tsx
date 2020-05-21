@@ -4,13 +4,9 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import SurveyView from './views/SurveyView';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import survey from './data/survey-1.json'
 import HomeView from './views/HomeView';
 
 function App() {
-  React.useEffect(() => {
-    store.dispatch({type: 'update-survey', survey})
-  }, [])
   return (
     <Provider store={store}>
       <BrowserRouter>
