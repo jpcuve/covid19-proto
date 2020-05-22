@@ -16,8 +16,8 @@ import QuestionStillCard from '../cards/QuestionStillCard'
 
 const SurveyView: React.FC<RouteComponentProps> = props => {
   const previousSurvey = useSelector<ApplicationState, any>(state => state.survey)
-  console.log(`Previous survey: ${JSON.stringify(previousSurvey)}`)
-  console.log(`Previous survey answer: ${JSON.stringify(previousSurvey.answer)}`)
+//  console.log(`Previous survey: ${JSON.stringify(previousSurvey)}`)
+//  console.log(`Previous survey answer: ${JSON.stringify(previousSurvey.answer)}`)
   const survey = new SurveyOneContinue([], previousSurvey.answer)
   const [cards, setCards] = React.useState<Card[]>(survey.cards)
   const [currentCard, setCurrentCard] = React.useState<Card>(survey.next)

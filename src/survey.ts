@@ -43,31 +43,49 @@ export class SurveyOneContinue extends Survey {
   }
 
   protected pack(): Card {
-    console.log(`Previous data: ${this._previousAnswer}`)
+    // console.log(`Previous data: ${JSON.stringify(this._previousAnswer)}`)
     const peopleCount: number = this._previousAnswer.people.length
+    let lastIdentity: any = {}
+    let nextType: CardType = CardType.Blank
     let index: number = 0
-    let nextType: CardType = CardType.QuestionStill
+    nextType = peopleCount > 0 ? CardType.QuestionStill : CardType.QuestionOther
     this._cards.forEach(card => {
       switch(card.type){
         case CardType.QuestionStill:
-          nextType = card.answer.response ? CardType.Symptom : CardType.QuestionStill
-          index++
+          if (card.answer.response){
+            nextType = CardType.Symptom
+          } else {
+            this.data.people = this.data.people || []
+            this.data.people.push({
+              identity: this._previousAnswer[index],
+              symptom: card.answer,
+            })
+            index++
+          }
           if (index >= peopleCount){
             nextType = CardType.QuestionOther
           }
           break
-        case CardType.Symptom:
-          nextType = index < peopleCount ? CardType.QuestionStill : CardType.QuestionOther
-          break
         case CardType.QuestionOther:
-          nextType = card.answer.response ? CardType.Identity : CardType.Final
+          nextType = card.answer.response ? CardType.Identity: CardType.Final
           break
         case CardType.Identity:
+          lastIdentity = card.answer
           nextType = CardType.Symptom
+          break
+        case CardType.Symptom:
+          this.data.people = this.data.people || []
+          this.data.people.push({
+            identity: lastIdentity,
+            symptom: card.answer,
+          })
+          index++    
+          nextType = index >= peopleCount ? CardType.QuestionOther : CardType.QuestionStill
           break
       }
     })
-    return getDefaultCard(nextType, this._previousAnswer.people[index])
+    console.log(JSON.stringify(this.data))
+    return getDefaultCard(nextType, index < peopleCount ? this._previousAnswer.people[index] : {})
   }
 }
 
