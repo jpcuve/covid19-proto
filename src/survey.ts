@@ -52,13 +52,13 @@ export class SurveyOneContinue extends Survey {
     this._cards.forEach(card => {
       switch(card.type){
         case CardType.QuestionStill:
+          lastIdentity = this._previousAnswer.people[index].identity
           if (card.answer.response){
             nextType = CardType.Symptom
           } else {
             this.data.people = this.data.people || []
             this.data.people.push({
-              identity: this._previousAnswer[index],
-              symptom: card.answer,
+              identity: lastIdentity
             })
             index++
           }
