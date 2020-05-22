@@ -14,7 +14,7 @@ function App() {
           <Route exact path='/' component={HomeView} />
           <Route path='/home' component={HomeView}/>
           <Route path='/survey' component={SurveyView}/>
-          <Route render={() => (<div>No match</div>)} />
+          <Route render={() => (<div>404</div>)} />
         </Switch>
       </BrowserRouter>
     </Provider>

@@ -14,7 +14,7 @@ const QuestionStillCard: React.FC<CardProps> = props => {
     <CardTemplate {...props} errors={errors}>
       <form>
         <fieldset>
-          <legend>Is {answer.identity.initials} still showing symptoms?</legend>
+          <legend>Is {answer.initials} still showing symptoms?</legend>
           <label>
             <span>Yes</span>
             <input type='radio' checked={answer.response === true} onChange={() => validate({...answer, response: true})}/>

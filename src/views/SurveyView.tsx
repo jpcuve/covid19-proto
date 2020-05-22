@@ -10,7 +10,7 @@ import QuestionOtherCard from '../cards/QuestionOtherCard'
 import QuestionSymptomCard from '../cards/QuestionSymptomCard'
 import SymptomCard from '../cards/SymptomCard'
 import { ApplicationState } from '../store'
-import { SurveyOneStart, SurveyOneContinue } from '../survey'
+import { SurveyOne } from '../survey'
 import PageTemplate from '../templates/PageTemplate'
 import QuestionStillCard from '../cards/QuestionStillCard'
 
@@ -18,11 +18,11 @@ const SurveyView: React.FC<RouteComponentProps> = props => {
   const previousSurvey = useSelector<ApplicationState, any>(state => state.survey)
 //  console.log(`Previous survey: ${JSON.stringify(previousSurvey)}`)
 //  console.log(`Previous survey answer: ${JSON.stringify(previousSurvey.answer)}`)
-  const survey = new SurveyOneContinue([], previousSurvey.answer)
+  const survey = new SurveyOne([], previousSurvey.answer)
   const [cards, setCards] = React.useState<Card[]>(survey.cards)
   const [currentCard, setCurrentCard] = React.useState<Card>(survey.next)
   const handleMove = (displacement: number) => {
-    const survey = new SurveyOneContinue(cards, previousSurvey.answer)
+    const survey = new SurveyOne(cards, previousSurvey.answer)
     if (displacement > 0) {
       survey.push(currentCard)
     }
@@ -46,7 +46,7 @@ const SurveyView: React.FC<RouteComponentProps> = props => {
       {currentCard.type === CardType.QuestionSymptom && <QuestionSymptomCard answer={currentCard.answer} onAnswer={handleAnswer} onMove={handleMove} />}
       {currentCard.type === CardType.QuestionOther && <QuestionOtherCard answer={currentCard.answer} onAnswer={handleAnswer} onMove={handleMove} />}
       {currentCard.type === CardType.QuestionStill && <QuestionStillCard answer={currentCard.answer} onAnswer={handleAnswer} onMove={handleMove} />}
-      {currentCard.type === CardType.Final && <FinalCard answer={currentCard.answer} onAnswer={handleAnswer} onMove={handleMove} survey={new SurveyOneStart(cards)} />}
+      {currentCard.type === CardType.Final && <FinalCard answer={currentCard.answer} onAnswer={handleAnswer} onMove={handleMove} />}
       <div>Current: {currentCard.type} {JSON.stringify(currentCard.answer)}</div>
       <ul>
         {[...cards].reverse().map((c, index) => {

@@ -34,92 +34,92 @@ abstract class Survey {
   protected abstract pack(): Card
 }
 
-export class SurveyOneContinue extends Survey {
-  private _previousAnswer: any
 
-  constructor(cards: Card[], previousAnswer: any){
+export class SurveyOne extends Survey {
+  private _previous: any
+
+  constructor(cards: Card[], previous: any = {}){
     super(cards)
-    this._previousAnswer = previousAnswer
+    this._previous = previous
   }
 
   protected pack(): Card {
-    // console.log(`Previous data: ${JSON.stringify(this._previousAnswer)}`)
-    const peopleCount: number = this._previousAnswer.people.length
-    let lastIdentity: any = {}
-    let nextType: CardType = CardType.Blank
-    let index: number = 0
-    nextType = peopleCount > 0 ? CardType.QuestionStill : CardType.QuestionOther
+    const isFirstSurvey: boolean = Object.keys(this._previous).length === 0
+    const isSomebodyWithSymptoms: boolean = !isFirstSurvey && this._previous.people.length > 0
+    const personCount = isSomebodyWithSymptoms ? this._previous.people.length : 0
+    let personIndex = 0
+    let nextType: CardType
+    let extra = {}
+    this.data.people = this.data.people || []
+    if (isFirstSurvey){
+      nextType = CardType.Household
+    } else {
+      if (personIndex >= personCount){
+        nextType = CardType.QuestionOther
+      } else {
+        this.data.people.push(this._previous.people[personIndex])
+        nextType = CardType.QuestionStill
+        extra = {initials: this.data.people[this.data.people.length - 1].identity.initials}
+      }
+    }
     this._cards.forEach(card => {
       switch(card.type){
         case CardType.QuestionStill:
-          lastIdentity = this._previousAnswer.people[index].identity
           if (card.answer.response){
             nextType = CardType.Symptom
+            extra = {identity: card.answer.identity}
           } else {
-            this.data.people = this.data.people || []
-            this.data.people.push({
-              identity: lastIdentity
-            })
-            index++
+            this.data.people[this.data.people.length - 1].symptom = card.answer
+            personIndex++
+            if (personIndex >= personCount){
+              nextType = CardType.QuestionOther
+            } else {
+              this.data.people.push(this._previous.people[personIndex])
+              nextType = CardType.QuestionStill
+              extra = {initials: this.data.people[this.data.people.length - 1].identity.initials}
+            }
           }
-          if (index >= peopleCount){
-            nextType = CardType.QuestionOther
-          }
           break
-        case CardType.QuestionOther:
-          nextType = card.answer.response ? CardType.Identity: CardType.Final
-          break
-        case CardType.Identity:
-          lastIdentity = card.answer
-          nextType = CardType.Symptom
-          break
-        case CardType.Symptom:
-          this.data.people = this.data.people || []
-          this.data.people.push({
-            identity: lastIdentity,
-            symptom: card.answer,
-          })
-          index++    
-          nextType = index >= peopleCount ? CardType.QuestionOther : CardType.QuestionStill
-          break
-      }
-    })
-    console.log(JSON.stringify(this.data))
-    return getDefaultCard(nextType, index < peopleCount ? this._previousAnswer.people[index] : {})
-  }
-}
-
-export class SurveyOneStart extends Survey {
-  protected pack(): Card {
-    console.log(`Packing survey, card count: ${this._cards.length}`)
-    let nextType: CardType = CardType.Household
-    let lastIdentity: any = {}
-    this._cards.forEach(card => {
-      switch(card.type){
         case CardType.Household:
           this.data.household = card.answer
           nextType = CardType.QuestionSymptom
           break
         case CardType.QuestionSymptom:
-          nextType = card.answer.response ? CardType.Identity : CardType.Final
+          if (card.answer.response){
+            this.data.people = this.data.people || []
+            this.data.people.push({})
+            nextType = CardType.Identity
+          } else {
+            nextType = CardType.Final
+            extra = {survey: this.data}
+          }
           break
         case CardType.Identity:
-          lastIdentity = card.answer
+          this.data.people[this.data.people.length - 1].identity = card.answer
           nextType = CardType.Symptom
           break
         case CardType.Symptom:
-          this.data.people = this.data.people || []
-          this.data.people.push({
-            identity: lastIdentity,
-            symptom: card.answer,
-          })
-          nextType = CardType.QuestionOther
+          this.data.people[this.data.people.length - 1].symptom = card.answer
+          personIndex++
+          if (personIndex >= personCount){
+            nextType = CardType.QuestionOther
+          } else {
+            this.data.people.push(this._previous.people[personIndex])
+            nextType = CardType.QuestionStill
+            extra = {initials: this.data.people[this.data.people.length - 1].identity.initials}
+          }
           break
         case CardType.QuestionOther:
-          nextType = card.answer.response ? CardType.Identity : CardType.Final
+          if (card.answer.response){
+            this.data.people.push({})
+            nextType = CardType.Identity
+          } else {
+            nextType = CardType.Final
+            extra = {survey: this.data}
+          }
           break
       }
     })
-    return getDefaultCard(nextType)
+    return getDefaultCard(nextType, extra)
   }
 }
