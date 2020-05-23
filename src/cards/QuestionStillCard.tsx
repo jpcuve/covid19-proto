@@ -3,7 +3,7 @@ import { CardProps } from '.'
 import CardTemplate from '../templates/CardTemplate'
 
 const QuestionStillCard: React.FC<CardProps> = props => {
-  const {card: {answer}, onAnswer}  = props
+  const {card: {answer, extra}, onAnswer}  = props
   const [errors, setErrors] = React.useState<string[]>(['Please fill the form'])
   const validate = (data: any) => {
     setErrors([])
@@ -14,7 +14,7 @@ const QuestionStillCard: React.FC<CardProps> = props => {
     <CardTemplate {...props} errors={errors}>
       <form>
         <fieldset>
-          <legend>Is {answer.initials} still showing symptoms?</legend>
+          <legend>Is {extra.initials} still showing symptoms?</legend>
           <label>
             <span>Yes</span>
             <input type='radio' checked={answer.response === true} onChange={() => validate({...answer, response: true})}/>
