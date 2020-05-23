@@ -13,6 +13,12 @@ const IdentityCard: React.FC<CardProps> = props => {
     if (!data.ageRange){
       messages.push('Please choose an age range')
     }
+    if (!data.gender){
+      messages.push('Please choose a gender')
+    }
+    if (!data.preExisting){
+      messages.push('Please specify if you have a pre-existing condition')
+    }
     setErrors(messages)
   }
   const handleAnswer = (data: any) => {
@@ -42,8 +48,25 @@ const IdentityCard: React.FC<CardProps> = props => {
               <option value='>60'>Over 60</option>
             </select>
           </label>
-          <div>Select gender</div>
-          <div>Yes/No factors</div>
+          <label>
+            <span>Gender</span>
+            <br/>
+            <select value={answer.gender} onChange={e => handleAnswer({...answer, gender: e.currentTarget.value})}>
+              <option value=''></option>
+              <option value='M'>Male</option>
+              <option value='F'>Female</option>
+              <option value='X'>Other</option>
+            </select>
+          </label>
+          <label>
+            <span>Pre-existing condition</span>
+            <br/>
+            <select value={answer.preExisting} onChange={e => handleAnswer({...answer, preExisting: e.currentTarget.value})}>
+              <option value=''></option>
+              <option value='yes'>Yes</option>
+              <option value='no'>No</option>
+            </select>
+          </label>
         </fieldset>
       </form>
     </CardTemplate>
