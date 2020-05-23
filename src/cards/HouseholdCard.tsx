@@ -4,7 +4,7 @@ import CardTemplate from '../templates/CardTemplate'
 
 const HouseholdCard: React.FC<CardProps> = props => {
   const {card: {answer}, onAnswer} = props
-  const [errors, setErrors] = React.useState<string[]>(['Please fill the form'])
+  const [errors, setErrors] = React.useState<string[]>([])
   const validate = (data: any) => {
     const messages = []
     if (!data.country){
@@ -13,10 +13,14 @@ const HouseholdCard: React.FC<CardProps> = props => {
     if (!data.cityCode){
       messages.push('Please fill-in a city code')
     }
+    if (data.householdSize <= 0){
+      messages.push('Please select a household size')
+    }
     setErrors(messages)
     onAnswer(data)
   }
-  
+  React.useEffect(() => validate(answer), [])
+
   return (
     <CardTemplate {...props} errors={errors}>
       <form>
@@ -43,6 +47,7 @@ const HouseholdCard: React.FC<CardProps> = props => {
             <span>Number of people</span>
             <br/>
             <select value={answer.householdSize} onChange={e => validate({...answer, householdSize: +e.currentTarget.value})}>
+              <option value='0'></option>
               <option value='1'>1</option>
               <option value='2'>2</option>
               <option value='3'>3</option>

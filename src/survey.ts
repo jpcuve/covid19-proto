@@ -1,4 +1,4 @@
-import { Card, getDefaultCard, CardType } from "./cards"
+import { Card, getDefaultCard, CardType, Extra } from "./cards"
 
 
 abstract class Survey {
@@ -39,7 +39,7 @@ export class SurveyOne extends Survey {
   private _previous: any
   private _isFirstSurvey: boolean
   private _personCount: number
-  private _extra: any
+  private _extra: Extra
 
   constructor(cards: Card[], previous: any = {}){
     super(cards)
@@ -55,7 +55,7 @@ export class SurveyOne extends Survey {
       return CardType.QuestionOther
     }
     this.data.people.push(this._previous.people[personIndex])
-    this._extra = {initials: this.data.people[this.data.people.length - 1].identity.initials}
+    this._extra = {identity: this.data.people[this.data.people.length - 1].identity}
     return CardType.QuestionStill
   }
 
@@ -66,7 +66,6 @@ export class SurveyOne extends Survey {
       switch(card.type){
         case CardType.QuestionStill:
           if (card.answer.response){
-            this._extra = {identity: card.answer.identity}
             nextType = CardType.Symptom
           } else {
             this.data.people[this.data.people.length - 1].symptom = card.answer

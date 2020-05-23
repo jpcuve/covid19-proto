@@ -4,7 +4,7 @@ import CardTemplate from '../templates/CardTemplate'
 
 const IdentityCard: React.FC<CardProps> = props => {
   const {card: {answer}, onAnswer}  = props
-  const [errors, setErrors] = React.useState<string[]>(['Please fill the form'])
+  const [errors, setErrors] = React.useState<string[]>([])
   const validate = (data: any) => {
     const messages = []
     if (!data.initials){
@@ -16,6 +16,7 @@ const IdentityCard: React.FC<CardProps> = props => {
     setErrors(messages)
     onAnswer(data)
   }
+  React.useEffect(() => validate(answer), [])
 
   return (
     <CardTemplate {...props} errors={errors}>

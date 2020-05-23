@@ -4,11 +4,12 @@ import CardTemplate from '../templates/CardTemplate'
 
 const QuestionOtherCard: React.FC<CardProps> = props => {
   const {card: {answer}, onAnswer}  = props
-  const [errors, setErrors] = React.useState<string[]>(['Please fill the form'])
+  const [errors, setErrors] = React.useState<string[]>([])
   const validate = (data: any) => {
     setErrors([])
     onAnswer(data)
   }
+  React.useEffect(() => validate(answer), [])
 
   return (
     <CardTemplate {...props} errors={errors}>
