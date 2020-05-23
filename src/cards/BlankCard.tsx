@@ -3,7 +3,7 @@ import { CardProps } from '.'
 import CardTemplate from '../templates/CardTemplate'
 
 const BlankCard: React.FC<CardProps> = props => {
-  const {answer} = props
+  const {card: {answer}} = props
   return (
     <CardTemplate {...props} errors={[]}>
       {answer.title && <h1>{answer.title}</h1>}

@@ -39,14 +39,14 @@ const SurveyView: React.FC<RouteComponentProps> = props => {
   return (
     <PageTemplate {...props}>
       <div>Survey</div>
-      {currentCard.type === CardType.Blank && <BlankCard answer={currentCard.answer} onAnswer={handleAnswer} onMove={handleMove} />}
-      {currentCard.type === CardType.Household && <HouseholdCard answer={currentCard.answer} onAnswer={handleAnswer} onMove={handleMove} />}
-      {currentCard.type === CardType.Identity && <IdentityCard answer={currentCard.answer} onAnswer={handleAnswer} onMove={handleMove} />}
-      {currentCard.type === CardType.Symptom && <SymptomCard answer={currentCard.answer} onAnswer={handleAnswer} onMove={handleMove} />}
-      {currentCard.type === CardType.QuestionSymptom && <QuestionSymptomCard answer={currentCard.answer} onAnswer={handleAnswer} onMove={handleMove} />}
-      {currentCard.type === CardType.QuestionOther && <QuestionOtherCard answer={currentCard.answer} onAnswer={handleAnswer} onMove={handleMove} />}
-      {currentCard.type === CardType.QuestionStill && <QuestionStillCard answer={currentCard.answer} onAnswer={handleAnswer} onMove={handleMove} />}
-      {currentCard.type === CardType.Final && <FinalCard answer={currentCard.answer} onAnswer={handleAnswer} onMove={handleMove} />}
+      {currentCard.type === CardType.Blank && <BlankCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />}
+      {currentCard.type === CardType.Household && <HouseholdCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />}
+      {currentCard.type === CardType.Identity && <IdentityCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />}
+      {currentCard.type === CardType.Symptom && <SymptomCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />}
+      {currentCard.type === CardType.QuestionSymptom && <QuestionSymptomCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />}
+      {currentCard.type === CardType.QuestionOther && <QuestionOtherCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />}
+      {currentCard.type === CardType.QuestionStill && <QuestionStillCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />}
+      {currentCard.type === CardType.Final && <FinalCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />}
       <div>Current: {currentCard.type} {JSON.stringify(currentCard.answer)}</div>
       <ul>
         {[...cards].reverse().map((c, index) => {

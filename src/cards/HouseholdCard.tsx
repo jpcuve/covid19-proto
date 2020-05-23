@@ -3,7 +3,7 @@ import { CardProps } from '.'
 import CardTemplate from '../templates/CardTemplate'
 
 const HouseholdCard: React.FC<CardProps> = props => {
-  const {answer, onAnswer}  = props
+  const {card: {answer}, onAnswer} = props
   const [errors, setErrors] = React.useState<string[]>(['Please fill the form'])
   const validate = (data: any) => {
     const messages = []
