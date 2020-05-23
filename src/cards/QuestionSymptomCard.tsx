@@ -7,9 +7,13 @@ const QuestionSymptomCard: React.FC<CardProps> = props => {
   const [errors, setErrors] = React.useState<string[]>([])
   const validate = (data: any) => {
     setErrors([])
+  }
+  const handleAnswer = (data: any) => {
+    validate(data)
     onAnswer(data)
   }
-  React.useEffect(() => validate(answer), [])
+  const [, dispatch] = React.useReducer<any>(() => validate(answer), undefined)
+  React.useEffect(() => dispatch(), [dispatch])
 
   return (
     <CardTemplate {...props} errors={errors}>
@@ -18,11 +22,11 @@ const QuestionSymptomCard: React.FC<CardProps> = props => {
           <legend>Is anybody symptomatic?</legend>
           <label>
             <span>Yes</span>
-            <input type='radio' checked={answer.response === true} onChange={() => validate({...answer, response: true})}/>
+            <input type='radio' checked={answer.response === true} onChange={() => handleAnswer({...answer, response: true})}/>
           </label>
           <label>
             <span>No</span>
-            <input type='radio' checked={answer.response === false} onChange={() => validate({...answer, response: false})}/>
+            <input type='radio' checked={answer.response === false} onChange={() => handleAnswer({...answer, response: false})}/>
           </label>
         </fieldset>
       </form>

@@ -17,9 +17,13 @@ const HouseholdCard: React.FC<CardProps> = props => {
       messages.push('Please select a household size')
     }
     setErrors(messages)
+  }
+  const handleAnswer = (data: any) => {
+    validate(data)
     onAnswer(data)
   }
-  React.useEffect(() => validate(answer), [])
+  const [, dispatch] = React.useReducer<any>(() => validate(answer), undefined)
+  React.useEffect(() => dispatch(), [dispatch])
 
   return (
     <CardTemplate {...props} errors={errors}>
@@ -29,7 +33,7 @@ const HouseholdCard: React.FC<CardProps> = props => {
           <label>
             <span>Country</span>
             <br/>
-            <select value={answer.country} onChange={e => validate({...answer, country: e.currentTarget.value})}>
+            <select value={answer.country} onChange={e => handleAnswer({...answer, country: e.currentTarget.value})}>
               <option value=''></option>
               <option value='europe'>Europe</option>
               <option value='america'>America</option>
@@ -41,12 +45,12 @@ const HouseholdCard: React.FC<CardProps> = props => {
           <label>
             <span>City code</span>
             <br/>
-            <input value={answer.cityCode} onChange={e => validate({...answer, cityCode: e.currentTarget.value})}/>
+            <input value={answer.cityCode} onChange={e => handleAnswer({...answer, cityCode: e.currentTarget.value})}/>
           </label>
           <label>
             <span>Number of people</span>
             <br/>
-            <select value={answer.householdSize} onChange={e => validate({...answer, householdSize: +e.currentTarget.value})}>
+            <select value={answer.householdSize} onChange={e => handleAnswer({...answer, householdSize: +e.currentTarget.value})}>
               <option value='0'></option>
               <option value='1'>1</option>
               <option value='2'>2</option>

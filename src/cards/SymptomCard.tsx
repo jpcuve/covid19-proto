@@ -11,9 +11,13 @@ const SymptomCard: React.FC<CardProps> = props => {
       messages.push('Please choose a test status')
     }
     setErrors(messages)
+  }
+  const handleAnswer = (data: any) => {
+    validate(data)
     onAnswer(data)
   }
-  React.useEffect(() => validate(answer), [])
+  const [, dispatch] = React.useReducer<any>(() => validate(answer), undefined)
+  React.useEffect(() => dispatch(), [dispatch])
 
   return (
     <CardTemplate {...props} errors={errors}>
@@ -25,7 +29,7 @@ const SymptomCard: React.FC<CardProps> = props => {
           <label>
             <span>Tested</span>
             <br/>
-            <select value={answer.test} onChange={e => validate({...answer, test: e.currentTarget.value})}>
+            <select value={answer.test} onChange={e => handleAnswer({...answer, test: e.currentTarget.value})}>
               <option value=''></option>
               <option value='yes+'>Yes with positive results</option>
               <option value='yes-'>Yes with negative results</option>
