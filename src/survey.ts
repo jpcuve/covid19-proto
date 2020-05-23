@@ -3,7 +3,7 @@ import { Card, getDefaultCard, CardType } from "./cards"
 
 abstract class Survey {
   protected _cards: Card[]
-  protected _next: Card|undefined
+  protected _next?: Card
   readonly data: any = {}
 
   constructor(cards: Card[]){
@@ -37,47 +37,41 @@ abstract class Survey {
 
 export class SurveyOne extends Survey {
   private _previous: any
+  private _isFirstSurvey: boolean
+  private _personCount: number
+  private _extra: any
 
   constructor(cards: Card[], previous: any = {}){
     super(cards)
     this._previous = previous
+    this._isFirstSurvey = Object.keys(this._previous).length === 0
+    this._personCount = this._isFirstSurvey ? 0 : this._previous.people.length
+    this._extra = {}
+    this.data.people = this.data.people || []
+  }
+
+  private follow(personIndex: number): CardType {
+    if (personIndex >= this._personCount){
+      return CardType.QuestionOther
+    }
+    this.data.people.push(this._previous.people[personIndex])
+    this._extra = {initials: this.data.people[this.data.people.length - 1].identity.initials}
+    return CardType.QuestionStill
   }
 
   protected pack(): Card {
-    const isFirstSurvey: boolean = Object.keys(this._previous).length === 0
-    const isSomebodyWithSymptoms: boolean = !isFirstSurvey && this._previous.people.length > 0
-    const personCount = isSomebodyWithSymptoms ? this._previous.people.length : 0
     let personIndex = 0
-    let nextType: CardType
-    let extra = {}
-    this.data.people = this.data.people || []
-    if (isFirstSurvey){
-      nextType = CardType.Household
-    } else {
-      if (personIndex >= personCount){
-        nextType = CardType.QuestionOther
-      } else {
-        this.data.people.push(this._previous.people[personIndex])
-        nextType = CardType.QuestionStill
-        extra = {initials: this.data.people[this.data.people.length - 1].identity.initials}
-      }
-    }
+    let nextType: CardType = this._isFirstSurvey ? CardType.Household : this.follow(personIndex)
     this._cards.forEach(card => {
       switch(card.type){
         case CardType.QuestionStill:
           if (card.answer.response){
+            this._extra = {identity: card.answer.identity}
             nextType = CardType.Symptom
-            extra = {identity: card.answer.identity}
           } else {
             this.data.people[this.data.people.length - 1].symptom = card.answer
             personIndex++
-            if (personIndex >= personCount){
-              nextType = CardType.QuestionOther
-            } else {
-              this.data.people.push(this._previous.people[personIndex])
-              nextType = CardType.QuestionStill
-              extra = {initials: this.data.people[this.data.people.length - 1].identity.initials}
-            }
+            nextType = this.follow(personIndex)
           }
           break
         case CardType.Household:
@@ -86,12 +80,11 @@ export class SurveyOne extends Survey {
           break
         case CardType.QuestionSymptom:
           if (card.answer.response){
-            this.data.people = this.data.people || []
             this.data.people.push({})
             nextType = CardType.Identity
           } else {
+            this._extra = {survey: this.data}
             nextType = CardType.Final
-            extra = {survey: this.data}
           }
           break
         case CardType.Identity:
@@ -101,25 +94,19 @@ export class SurveyOne extends Survey {
         case CardType.Symptom:
           this.data.people[this.data.people.length - 1].symptom = card.answer
           personIndex++
-          if (personIndex >= personCount){
-            nextType = CardType.QuestionOther
-          } else {
-            this.data.people.push(this._previous.people[personIndex])
-            nextType = CardType.QuestionStill
-            extra = {initials: this.data.people[this.data.people.length - 1].identity.initials}
-          }
+          nextType = this.follow(personIndex)
           break
         case CardType.QuestionOther:
           if (card.answer.response){
             this.data.people.push({})
             nextType = CardType.Identity
           } else {
+            this._extra = {survey: this.data}
             nextType = CardType.Final
-            extra = {survey: this.data}
           }
           break
       }
     })
-    return getDefaultCard(nextType, extra)
+    return getDefaultCard(nextType, this._extra)
   }
 }
