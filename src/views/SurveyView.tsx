@@ -13,6 +13,7 @@ import { ApplicationState } from '../store'
 import { SurveyOne } from '../survey'
 import PageTemplate from '../templates/PageTemplate'
 import QuestionStillCard from '../cards/QuestionStillCard'
+import RecapCard from '../cards/RecapCard'
 
 const SurveyView: React.FC<RouteComponentProps> = props => {
   const previousSurvey = useSelector<ApplicationState, any>(state => state.survey)
@@ -35,18 +36,24 @@ const SurveyView: React.FC<RouteComponentProps> = props => {
   const handleAnswer = (answer: any) => {
     setCurrentCard({ ...currentCard, answer })
   }
+  const selectCard = () => {
+    switch(currentCard.type){
+      case CardType.Blank: return <BlankCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />
+      case CardType.Household: return <HouseholdCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />
+      case CardType.Identity: return <IdentityCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />
+      case CardType.Symptom: return <SymptomCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />
+      case CardType.QuestionSymptom: return <QuestionSymptomCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />
+      case CardType.QuestionOther: return <QuestionOtherCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />
+      case CardType.QuestionStill: return <QuestionStillCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />
+      case CardType.Recap: return <RecapCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />
+      case CardType.Final: return <FinalCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />
+    }
+  }
 
   return (
     <PageTemplate {...props}>
       <div>Survey</div>
-      {currentCard.type === CardType.Blank && <BlankCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />}
-      {currentCard.type === CardType.Household && <HouseholdCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />}
-      {currentCard.type === CardType.Identity && <IdentityCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />}
-      {currentCard.type === CardType.Symptom && <SymptomCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />}
-      {currentCard.type === CardType.QuestionSymptom && <QuestionSymptomCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />}
-      {currentCard.type === CardType.QuestionOther && <QuestionOtherCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />}
-      {currentCard.type === CardType.QuestionStill && <QuestionStillCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />}
-      {currentCard.type === CardType.Final && <FinalCard card={currentCard} onAnswer={handleAnswer} onMove={handleMove} />}
+      {selectCard()}
       <div>Current: {currentCard.type} {JSON.stringify(currentCard.answer)}</div>
       <ul>
         {[...cards].reverse().map((c, index) => {

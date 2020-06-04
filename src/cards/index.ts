@@ -6,6 +6,7 @@ export enum CardType {
   Symptom = 'symptom',
   QuestionOther = 'questionOther',
   QuestionStill = 'questionStill',
+  Recap = 'recap',
   Final = 'final',
 }
 
@@ -44,6 +45,7 @@ export function getDefaultCard(type: CardType, extra: Extra = {}) {
     case CardType.Symptom: return new Card(type, {symptoms: [], severe: '', evolution: '', test: ''}, extra)
     case CardType.QuestionOther: return new Card(type, {response: null}, extra)
     case CardType.QuestionStill: return new Card(type, {response: null}, extra)
+    case CardType.Recap: return new Card(type, {}, extra)
     case CardType.Final: return new Card(type, {}, extra)
   }
 }

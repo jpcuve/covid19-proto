@@ -36,32 +36,32 @@ abstract class Survey {
 
 
 export class SurveyOne extends Survey {
-  private _previous: any
-  private _isFirstSurvey: boolean
-  private _personCount: number
-  private _extra: Extra
+  private previous: any
+  private isFirstSurvey: boolean
+  private personCount: number
+  private extra: Extra
 
-  constructor(cards: Card[], previous: any = {}){
+  constructor(cards: Card[], previous: any = {}, pack = false){
     super(cards)
-    this._previous = previous
-    this._isFirstSurvey = Object.keys(this._previous).length === 0
-    this._personCount = this._isFirstSurvey ? 0 : this._previous.people.length
-    this._extra = {}
+    this.previous = previous
+    this.isFirstSurvey = Object.keys(this.previous).length === 0
+    this.personCount = this.isFirstSurvey ? 0 : this.previous.people.length
+    this.extra = {}
     this.data.people = this.data.people || []
   }
 
   private follow(personIndex: number): CardType {
-    if (personIndex >= this._personCount){
+    if (personIndex >= this.personCount){
       return CardType.QuestionOther
     }
-    this.data.people.push(this._previous.people[personIndex])
-    this._extra = {identity: this.data.people[this.data.people.length - 1].identity}
+    this.data.people.push(this.previous.people[personIndex])
+    this.extra = {identity: this.data.people[this.data.people.length - 1].identity}
     return CardType.QuestionStill
   }
 
   protected pack(): Card {
     let personIndex = 0
-    let nextType: CardType = this._isFirstSurvey ? CardType.Household : this.follow(personIndex)
+    let nextType: CardType = this.isFirstSurvey ? CardType.Household : this.follow(personIndex)
     this._cards.forEach(card => {
       switch(card.type){
         case CardType.QuestionStill:
@@ -82,8 +82,7 @@ export class SurveyOne extends Survey {
             this.data.people.push({})
             nextType = CardType.Identity
           } else {
-            this._extra = {survey: this.data}
-            nextType = CardType.Final
+            nextType = CardType.Recap
           }
           break
         case CardType.Identity:
@@ -100,12 +99,14 @@ export class SurveyOne extends Survey {
             this.data.people.push({})
             nextType = CardType.Identity
           } else {
-            this._extra = {survey: this.data}
-            nextType = CardType.Final
+            nextType = CardType.Recap
           }
+          break
+        case CardType.Recap:
           break
       }
     })
-    return getDefaultCard(nextType, this._extra)
+    this.extra = {...this.extra, survey: this.data}
+    return getDefaultCard(nextType, this.extra)
   }
 }

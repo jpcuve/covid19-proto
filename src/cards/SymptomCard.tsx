@@ -55,6 +55,33 @@ const SymptomCard: React.FC<CardProps> = props => {
             <br/>
             <input type="checkbox" checked={answer.symptoms.includes['breath']} onChange={e => handleSymptom('breath', e.target.checked)}/>
             <span>Shortness of breath</span>
+            <br/>
+            <input type="checkbox" checked={answer.symptoms.includes['fatigue']} onChange={e => handleSymptom('fatigue', e.target.checked)}/>
+            <span>Debilitating fatigue</span>
+            <br/>
+            <input type="checkbox" checked={answer.symptoms.includes['pain']} onChange={e => handleSymptom('pain', e.target.checked)}/>
+            <span>Severe muscle or joint pain</span>
+            <br/>
+            <input type="checkbox" checked={answer.symptoms.includes['appetite']} onChange={e => handleSymptom('appetite', e.target.checked)}/>
+            <span>Skipped meals</span>
+            <br/>
+            <input type="checkbox" checked={answer.symptoms.includes['senses']} onChange={e => handleSymptom('senses', e.target.checked)}/>
+            <span>Sudden loss of smell and/or taste</span>
+            <br/>
+            <input type="checkbox" checked={answer.symptoms.includes['nose']} onChange={e => handleSymptom('nose', e.target.checked)}/>
+            <span>Runny or stuffy nose, or sneezing</span>
+            <br/>
+            <input type="checkbox" checked={answer.symptoms.includes['nausea']} onChange={e => handleSymptom('nausea', e.target.checked)}/>
+            <span>Nausea, vomiting or diarrhea</span>
+            <br/>
+            <input type="checkbox" checked={answer.symptoms.includes['throat']} onChange={e => handleSymptom('throat', e.target.checked)}/>
+            <span>Sore throat</span>
+            <br/>
+            <input type="checkbox" checked={answer.symptoms.includes['headache']} onChange={e => handleSymptom('headache', e.target.checked)}/>
+            <span>Headache</span>
+            <br/>
+            <input type="checkbox" checked={answer.symptoms.includes['other']} onChange={e => handleSymptom('other', e.target.checked)}/>
+            <span>Other symptoms</span>
           </label>
           <label>
             <span>Severe?</span>

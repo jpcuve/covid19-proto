@@ -3,7 +3,7 @@ import { CardProps } from '.'
 import CardTemplate from '../templates/CardTemplate'
 
 const QuestionOtherCard: React.FC<CardProps> = props => {
-  const {card: {answer}, onAnswer}  = props
+  const {card: {answer, extra}, onAnswer}  = props
   const [errors, setErrors] = React.useState<string[]>([])
   const validate = (data: any) => {
     setErrors([])
@@ -17,6 +17,13 @@ const QuestionOtherCard: React.FC<CardProps> = props => {
 
   return (
     <CardTemplate {...props} errors={errors}>
+      {extra.survey.people.map((person: any) => { return (
+        <div key={person.identity.initials}>
+          <span>{person.identity.initials}</span>
+          {person.symptom.symptoms && <span>(Symptoms today)</span>}
+          {!person.symptom.symptoms && <span>(No symptom)</span>}
+        </div>
+      )})}
       <form>
         <fieldset>
           <legend>Is there another symptomatic person?</legend>
